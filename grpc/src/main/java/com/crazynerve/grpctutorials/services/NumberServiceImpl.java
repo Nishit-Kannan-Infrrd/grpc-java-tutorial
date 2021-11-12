@@ -9,7 +9,6 @@ import io.grpc.stub.StreamObserver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.IntPredicate;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
@@ -18,6 +17,7 @@ public class NumberServiceImpl extends NumberServiceGrpc.NumberServiceImplBase
 {
 
     private static final Logger LOGGER = Logger.getLogger( NumberServiceImpl.class.getName() );
+
 
     // unary
     @Override
@@ -64,7 +64,7 @@ public class NumberServiceImpl extends NumberServiceGrpc.NumberServiceImplBase
             public void onNext( Number number )
             {
                 // implement what the server should do once it keeps getting requests
-                if(isPrime( number.getNumber() )){
+                if ( isPrime( number.getNumber() ) ) {
                     primeNumberList.add( number.getNumber() );
                 }
             }
@@ -97,7 +97,7 @@ public class NumberServiceImpl extends NumberServiceGrpc.NumberServiceImplBase
             public void onNext( Number number )
             {
                 LOGGER.info( () -> "Got request for " + number.getNumber() );
-                if(isPrime( number.getNumber() )){
+                if ( isPrime( number.getNumber() ) ) {
                     responseObserver.onNext( number );
                 }
             }
@@ -122,7 +122,6 @@ public class NumberServiceImpl extends NumberServiceGrpc.NumberServiceImplBase
 
     private boolean isPrime( int number )
     {
-        IntPredicate isDivisible = index -> number % index == 0;
-        return number > 1 && IntStream.range( 2, number ).noneMatch( isDivisible );
+        return number > 1 && IntStream.range( 2, number ).noneMatch( index -> number % index == 0 );
     }
 }
