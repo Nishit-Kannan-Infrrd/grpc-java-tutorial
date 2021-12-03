@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.crazynerve.grpctutorials.models";
+
+message Number {
+  int32 number = 1;
+}
+
+message NumberList {
+  repeated int32 numbers = 1;
+}
+
+message BoolResponse {
+  bool result = 1;
+}
+
+service NumberService {
+  // unary
+  rpc checkIfPrime(Number) returns (BoolResponse);
+  // server streaming
+  rpc findPrimes(Number) returns (stream Number);
+  // client side streaming
+  rpc primeList(stream Number) returns (NumberList);
+  // bi directional streaming
+  rpc primeStream(stream Number) returns (stream Number);
+}
