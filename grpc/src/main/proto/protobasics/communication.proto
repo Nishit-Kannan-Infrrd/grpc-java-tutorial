@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true; // this option creates separate model and builder classes
+option java_package = "com.crazynerve.grpctutorials.protobasics"; // creates package in the generated files
+
+message Communication {
+  string identifier = 1;
+  oneof communication_mode {
+    EmailDetails email_mode = 2;
+    PhoneDetails phone_mode = 3;
+  }
+}
+
+message EmailDetails {
+  string email_address = 1;
+}
+
+message PhoneDetails {
+  int32 phone_number = 1;
+  int32 country_code = 2;
+}
